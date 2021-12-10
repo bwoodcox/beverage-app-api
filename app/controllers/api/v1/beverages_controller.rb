@@ -1,5 +1,5 @@
-class BeveragesController < ApplicationController
-  before_action :set_beverage, only: [:show, :update, :destroy]
+class Api::V1::BeveragesController < ApplicationController
+  before_action :set_beverage, only: %i[show update destroy]
 
   # GET /beverages
   def index
@@ -39,13 +39,16 @@ class BeveragesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_beverage
-      @beverage = Beverage.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def beverage_params
-      params.require(:beverage).permit(:name, :description, :size, :category_id, :brand_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_beverage
+    @beverage = Beverage.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def beverage_params
+    params
+      .require(:beverage)
+      .permit(:name, :description, :size, :category_id, :brand_id)
+  end
 end
